@@ -20,7 +20,7 @@ build
 # other
 eclipse
 run
-build - Copy.gradle
+versions
 .vscode
 .devauth
 .DS_STORE
@@ -30,7 +30,6 @@ build - Copy.gradle
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,gradle,forgegradle,kotlin,macos,intellij,intellij+all,eclipse,visualstudiocode
 
 ### Eclipse ###
-.metadata
 bin/
 tmp/
 *.tmp
@@ -46,7 +45,6 @@ local.properties
 .externalToolBuilders/
 
 # Locally stored "Eclipse launch configurations"
-*.launch
 
 # PyDev specific (Python IDE for Eclipse)
 *.pydevproject

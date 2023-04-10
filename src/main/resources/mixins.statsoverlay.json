@@ -1,0 +1,9 @@
+{
+  "package": "me.redth.statsoverlay.mixin",
+  "refmap": "mixins.statsoverlay.refmap.json",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+  ],
+  "mixins": [
+  ]
+}
