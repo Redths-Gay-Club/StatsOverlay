@@ -21,6 +21,7 @@ plugins {
 val mod_name: String by project
 val mod_version: String by project
 val mod_id: String by project
+val mod_archives_name: String by project
 
 // Sets up the variables for when we preprocess to other Minecraft versions.
 preprocess {
@@ -38,12 +39,12 @@ blossom {
 version = mod_version
 // Sets the group, make sure to change this to your own. It can be a website you own backwards or your GitHub username.
 // e.g. com.github.<your username> or com.<your domain>
-group = "cc.polyfrost"
+group = "me.redth"
 
 // Sets the name of the output jar (the one you put in your mods folder and send to other people)
 // It outputs all versions of the mod into the `build` directory.
 base {
-    archivesName.set("$mod_id-$platform")
+    archivesName.set("$mod_archives_name-$platform")
 }
 
 // Configures the Polyfrost Loom, our plugin fork to easily set up the programming environment.
@@ -95,8 +96,6 @@ repositories {
 dependencies {
     // Adds the OneConfig library, so we can develop with it.
     modCompileOnly("cc.polyfrost:oneconfig-$platform:0.2.0-alpha+")
-
-    implementation(files("libs/OverflowAnimations-2.0.1-b6-1.8.9.jar"))
 
     // If we are building for legacy forge, includes the launch wrapper with `shade` as we configured earlier.
     if (platform.isLegacyForge) {
