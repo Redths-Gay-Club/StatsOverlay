@@ -39,12 +39,14 @@ object FetchQueue {
         val widthArray = IntArray(shown.size)
         val result = buildList {
             add(shown.map { column -> ColoredText(column.name) })
-            map.mapTo(this) { (profile, row) ->
-                shown.map { column ->
-                    if (column == Column.NAME) profile.getFormattedName()
-                    else row.getText(column)
+            map.entries
+                .sortedBy { (_, row) -> row }
+                .mapTo(this) { (profile, row) ->
+                    shown.map { column ->
+                        if (column == Column.NAME) profile.getFormattedName()
+                        else row.getText(column)
+                    }
                 }
-            }
         }
         for (row in result) {
             for ((index, text) in row.withIndex()) {
