@@ -6,6 +6,7 @@ import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.Mod
 import cc.polyfrost.oneconfig.config.data.ModType
 import me.redth.statsoverlay.StatsOverlay
+import me.redth.statsoverlay.data.Column
 import org.lwjgl.input.Keyboard
 
 object ModConfig : Config(Mod(StatsOverlay.NAME, ModType.HYPIXEL), "${StatsOverlay.MODID}.json") {
@@ -13,23 +14,26 @@ object ModConfig : Config(Mod(StatsOverlay.NAME, ModType.HYPIXEL), "${StatsOverl
         initialize()
     }
 
-    @KeyBind(name = "Overlay Key Bind")
+    @KeyBind(name = "Overlay Keybind")
     var keyBind = OneKeyBind(Keyboard.KEY_TAB)
 
-    @DualOption(name = "Key Bind Mode", left = "Hold", right = "Toggle")
+    @DualOption(name = "Keybind Type", left = "Hold", right = "Toggle")
     var toggleKeyBind = false
 
     @DualOption(name = "Show in", left = "Only in Bedwars", right = "Any Server")
-    var showAnyWhere = false
+    var showAnywhere = false
 
-    @Dropdown(name = "Sorting", options = ["Stars", "Final Kills", "FKDR", "Wins", "WLR", "Beds Broken", "BBLR", "Winstreak"])
+    @Dropdown(name = "Sort by", options = ["Stars", "Teams", "Final Kills", "FKDR", "Wins", "WLR", "Kills", "KDR", "Beds Broken", "BBLR", "Winstreak"])
     var sorting = 0
-
-    @Text(name = "Self Name")
-    var selfName = "§cYou"
 
     @HUD(name = "Overlay")
     var hud = OverlayHUD()
+
+    @Checkbox(name = "Wins", category = "Bedwars")
+    var bwWins = true
+
+    @Checkbox(name = "WLR", category = "Bedwars")
+    var bwWlr = true
 
     @Checkbox(name = "Final Kills", category = "Bedwars")
     var bwFinalKills = true
@@ -37,11 +41,11 @@ object ModConfig : Config(Mod(StatsOverlay.NAME, ModType.HYPIXEL), "${StatsOverl
     @Checkbox(name = "FKDR", category = "Bedwars")
     var bwFkdr = true
 
-    @Checkbox(name = "Wins", category = "Bedwars")
-    var bwWins = true
+    @Checkbox(name = "Kills", category = "Bedwars")
+    var bwKills = true
 
-    @Checkbox(name = "WLR", category = "Bedwars")
-    var bwWlr = true
+    @Checkbox(name = "KDR", category = "Bedwars")
+    var bwKdr = true
 
     @Checkbox(name = "Beds Broken", category = "Bedwars")
     var bwBedsBroken = true
@@ -74,4 +78,32 @@ object ModConfig : Config(Mod(StatsOverlay.NAME, ModType.HYPIXEL), "${StatsOverl
             if (toggleKeyBind) return keyBindToggled
             return lastKeyBindActive
         }
+
+    fun shouldShow(column: Column): Boolean = when (column) {
+        Column.STAR, Column.NAME -> true
+        Column.WINS -> bwWins
+        Column.WLR -> bwWlr
+        Column.FINAL_KILLS -> bwFinalKills
+        Column.FKDR -> bwFkdr
+        Column.KILLS -> bwKills
+        Column.KDR -> bwKdr
+        Column.BEDS_BROKEN -> bwBedsBroken
+        Column.BBLR -> bwBblr
+        Column.WINSTREAK -> bwWinstreak
+    }
+
+    fun getComparing(): Column = when (sorting) {
+        0 -> Column.STAR
+        1 -> Column.NAME
+        2 -> Column.WINS
+        3 -> Column.WLR
+        4 -> Column.FINAL_KILLS
+        5 -> Column.FKDR
+        6 -> Column.KILLS
+        7 -> Column.KDR
+        8 -> Column.BEDS_BROKEN
+        9 -> Column.BBLR
+        10 -> Column.WINSTREAK
+        else -> Column.STAR
+    }
 }
