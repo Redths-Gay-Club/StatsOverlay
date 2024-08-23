@@ -12,8 +12,8 @@ sealed interface Row {
     val name: String
     fun getText(column: Column): ColoredText
 
-    fun getTeamName(): String =
-        mc.theWorld?.scoreboard?.getPlayersTeam(name)?.registeredName ?: ""
+    fun getTeamNameForSorting(): String =
+        mc.theWorld?.scoreboard?.getPlayersTeam(name)?.registeredName?.takeIf { it.isColorName() } ?: ""
 
     fun getFormattedName(): ColoredText {
         val world = mc.theWorld ?: return ColoredText(name, alignment = Alignment.LEFT)
@@ -21,6 +21,19 @@ sealed interface Row {
         return ColoredText(ScorePlayerTeam.formatPlayerName(team, name), alignment = Alignment.LEFT)
     }
 }
+
+private val colorName = listOf(
+    "Aqua",
+    "Blue",
+    "Gray",
+    "Green",
+    "Pink",
+    "Red",
+    "White",
+    "Yellow",
+) // hypixel team name is something like Red12 Blue31
+
+private fun String.isColorName() = filter { it.isLetter() } in colorName
 
 class Loading(
     override val name: String,

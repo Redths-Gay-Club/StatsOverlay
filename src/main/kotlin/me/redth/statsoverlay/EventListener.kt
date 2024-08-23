@@ -5,6 +5,7 @@ import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent
 import cc.polyfrost.oneconfig.events.event.WorldLoadEvent
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe
 import cc.polyfrost.oneconfig.utils.dsl.mc
+import cc.polyfrost.oneconfig.utils.hypixel.HypixelUtils
 import cc.polyfrost.oneconfig.utils.hypixel.LocrawInfo
 import com.mojang.authlib.GameProfile
 import me.redth.statsoverlay.config.ModConfig

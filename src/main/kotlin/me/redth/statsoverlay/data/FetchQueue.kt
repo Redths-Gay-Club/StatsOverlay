@@ -47,10 +47,7 @@ object FetchQueue {
             map.values
                 .sortedWith(getComparator())
                 .mapTo(this) { row ->
-                    shown.map { column ->
-                        if (column == Column.NAME) row.getFormattedName()
-                        else row.getText(column)
-                    }
+                    shown.map { column -> row.getText(column) }
                 }
         }
         for (row in result) {
@@ -68,7 +65,7 @@ object FetchQueue {
 }
 
 private fun getComparator(): Comparator<Row> = when {
-    ModConfig.sortByTeams -> compareBy<Row> { row -> row.getTeamName() }.thenComparing(RowComparator)
+    ModConfig.sortByTeams -> compareBy<Row> { row -> row.getTeamNameForSorting() }.thenComparing(RowComparator)
     else -> RowComparator
 }
 
