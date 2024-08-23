@@ -60,9 +60,9 @@ object UrsaMinor {
         private val tokenString: String?,
         expiry: String?
     ) : TokenState {
-        private val expiryInMillis = runCatching {
+        private val expiryInMillis = try {
             expiry?.toLong() ?: (System.currentTimeMillis() + FIFTY_FIVE_MINUTES)
-        }.getOrElse {
+        } catch (_: Exception) {
             System.currentTimeMillis() + FIFTY_FIVE_MINUTES
         }
 
